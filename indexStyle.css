@@ -1,5 +1,40 @@
-#welcome-section {
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+.welcome-section {
     background-color: thistle;
     text-align: center;
-    padding: 10px 0px 10px 0px;
+    padding: 0.1em 0em 0.5em 0em;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #584e58;
+    padding: 0em 0.5em 0em 0.5em;
+}
+
+.nav-tab{
+    color:#fbf9fb;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0.75em;
+}
+
+.nav-tab:hover{
+    color: #584e58;
+    background-color: #fbf9fb;
+}
+
+.projects-section {
+    background-color: thistle;
+}
+
+.project-tile {
+    background-color: rgb(12,23,45);
 }
