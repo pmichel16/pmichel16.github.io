@@ -1,5 +1,11 @@
+:root {
+    --light-text-color: #fbf9fb;
+    --dark-text-color: #3a343a;
+}
+
 body {
     font-family: 'Source Sans Pro', sans-serif;
+    background-color: #584e58;
 }
 
 h1 {
@@ -8,33 +14,47 @@ h1 {
 
 .welcome-section {
     background-color: thistle;
+    color: var(--dark-text-color);
     text-align: center;
     padding: 0.1em 0em 0.5em 0em;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.4);
+    width: 100%;
 }
 
 .navbar {
     display: flex;
     justify-content: flex-end;
     background-color: #584e58;
+    box-shadow: 0 5px 13px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.4);
     padding: 0em 0.5em 0em 0.5em;
 }
 
 .nav-tab{
-    color:#fbf9fb;
+    color: var(--light-text-color);
     text-decoration: none;
     font-size: 18px;
     padding: 0.75em;
 }
 
-.nav-tab:hover{
+.nav-tab:hover {
     color: #584e58;
-    background-color: #fbf9fb;
+    background-color: var(--light-text-color);
 }
 
 .projects-section {
     background-color: thistle;
+    color: var(--dark-text-color);
 }
 
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20vw,1fr));
+    grid-template-rows: 20vw 20vw 20vw;
+    grid-gap: 5vw;
+    padding: 0vw 5vw 0vw 5vw;
+}
 .project-tile {
-    background-color: rgb(12,23,45);
+    background-color: #748b88;
+    text-align: center;
+    color: var(--light-text-color);
 }
