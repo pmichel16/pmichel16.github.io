@@ -1,0 +1,13 @@
+.field {
+    background-color: red;
+    display: grid;
+    grid-template-columns: repeat(20,5px);
+    grid-template-rows: repeat(20,5px);
+}
+
+.tile {
+    display: block;
+    background-color: green;
+    border: 1px;
+    border-color: white;
+}
