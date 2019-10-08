@@ -1,13 +1,32 @@
-.field {
-    background-color: red;
-    display: grid;
-    grid-template-columns: repeat(20,5px);
-    grid-template-rows: repeat(20,5px);
+body {
+    background-color: lightsteelblue;
 }
 
-.tile {
-    display: block;
-    background-color: green;
-    border: 1px;
-    border-color: white;
+.field-background {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 75vmin;
+    height: 75vmin;
+    background-color: forestgreen;
 }
+
+.field-horiz {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 75vmin;
+    height: 75vmin;
+    background: repeating-linear-gradient( 0deg, white 0vmin, white 0.5vmin, rgba(0,0,0,0) 0.5vmin, rgba(0,0,0,0) 7.5vmin);
+    opacity: 0.6;
+}
+.field-vert {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 75vmin;
+    height: 75vmin;
+    background: repeating-linear-gradient( 90deg, white 0vmin, white 0.5vmin, rgba(0,0,0,0) 0.5vmin, rgba(0,0,0,0) 7.5vmin);
+    opacity: 0.6;
+}
+
