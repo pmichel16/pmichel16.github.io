@@ -3,40 +3,68 @@ body{
   background-color: #ffdce1;
 }
 
-header{ 
+/*
+  Header
+*/
+header {
   background-color: #d4f3e5;
   text-align: center;
+  font-family: 'Exo 2', sans-serif;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header h2 {
+  margin: 0;
 }
 
 @media (min-width:800px) {
   header{ 
-    line-height: 50vh;
-    font-size: 3em;
     height: 50vh;
+  }
+
+  header h1 {
+    line-height: 30vh;
+    font-size: 4em;
+  }
+
+  header h2 {
+    line-height: 15vh;
+    font-size: 1.7em;
   }
 }
 
 @media (max-width: 800px) {
   header{
-    line-height: 33vh;
     font-size: 2em;
     height: 33vh;
   }
+
+  header p{
+      margin:0;
+  }
 }
 
-#navbar{
+/*
+  Navbar
+*/
+nav{
   position: sticky;
   top: 0;
   display: flex;
   background-color: #ffdce1;
+  height: 50px;
 }
 
 .nav-tab{
-  width: 25vw;
+  width: 20vw;
   text-align: center;
-  padding: 0.5em 0 0.5em 0;
+  padding: 0 0.5em 0 0.5em;
   text-decoration: none;
   color: #000;
+  line-height: 50px;
 
 }
 
@@ -44,36 +72,52 @@ header{
   background-color: #fffafa;
 }
 
-#sale-banner {
+/*
+  Sale banner
+*/
+.sale-banner {
   position: relative;
-  background: repeating-linear-gradient(45deg, #d4e2f3, white 20px, #d4e2f3 24px);
+  background: repeating-linear-gradient(45deg, #d4e2f3, white 20px, #d4e2f3 20px);
   text-align: center;
   margin: 0;
 }
 
+.sale-textbox{
+  background-color: rgba(255,255,255,0.9);
+}
 @media (min-width:800px) {
-  #sale-banner{
-    height: 50vh;
-    width: 50vw;
-  }
-
-  #sale-container {
+  .sale-container {
     display: flex;
   }
 
+  .sale-banner{
+    height: 50vh;
+    width: 50vw;
+  }
+
+  .sale-textbox{
+    height: 40vh;
+    width: 40vw;
+    margin: 5vh 5vw;
+  }
+
   .sale-text{
-    margin: 0;
-    line-height: 25vh;
+    padding: 12vh 0 0 0;
+  }
+
+  .sale-text-large{
+    padding: 5vh 0 0 0;
+    font-size: 1.5em;
   }
 
   #coat-photo {
-    height: 50vh;
     width: 50vw;
+    height: auto;
   }
 }
 
 @media (max-width:800px) {
-  #sale-banner{
+  .sale-banner{
     height: 33vh;
     width: 100%;
   }
@@ -88,8 +132,4 @@ header{
     height: 33vh;
     width: 100%;
   }
-}
-
-.sale-text-large{
-  font-size: 1.5em;
 }
