@@ -56,6 +56,7 @@ nav{
   display: flex;
   background-color: #ffdce1;
   height: 50px;
+  z-index: 1;
 }
 
 .nav-tab{
@@ -76,60 +77,85 @@ nav{
   Sale banner
 */
 .sale-banner {
-  position: relative;
-  background: repeating-linear-gradient(45deg, #d4e2f3, white 20px, #d4e2f3 20px);
   text-align: center;
   margin: 0;
+}
+
+#sale-winter{
+  background: repeating-linear-gradient(45deg, #d4e2f3, white 20px, #d4e2f3 20px);
+  background-color: red;
+}
+
+#sale-sweater {
+  background-color: lightpink;
 }
 
 .sale-textbox{
   background-color: rgba(255,255,255,0.9);
 }
-@media (min-width:800px) {
+
+.sale-text {
+  margin: 0;
+}
+
+@media (min-width:6.5in) {
   .sale-container {
-    display: flex;
+    display: flex;  
   }
 
-  .sale-banner{
-    height: 50vh;
+  .sale-banner {
     width: 50vw;
+    height: 34vw; /*From picture aspect ratio*/
   }
 
   .sale-textbox{
-    height: 40vh;
+    height: 24vw;
     width: 40vw;
-    margin: 5vh 5vw;
+    margin: 5vw;
   }
 
   .sale-text{
-    padding: 12vh 0 0 0;
+    padding: 8vw 0 0 0;
   }
 
   .sale-text-large{
-    padding: 5vh 0 0 0;
+    padding: 3vw 0 0 0;
     font-size: 1.5em;
   }
 
-  #coat-photo {
+  .goat-photo {
     width: 50vw;
     height: auto;
   }
 }
 
-@media (max-width:800px) {
-  .sale-banner{
-    height: 33vh;
-    width: 100%;
+@media (max-width:6.5in) {
+  .sale-container {
+    display: grid;
+    grid-template-columns: 1vw;
+  }
+  .sale-banner {
+    width: 100vw;
+    height: 68vw; /*From picture aspect ratio*/
   }
 
-  .sale-text{
-    margin: 0 15vw 0 15vw;
-    line-height: 15vh;
-    opacity: 1;
+  .sale-textbox {
+    height: 48vw;
+    width: 80vw;
+    margin: 10vw;
   }
 
-  #coat-photo {
-    height: 33vh;
-    width: 100%;
+  .sale-text {
+    padding: 8vw 0 0 0;
+  }
+
+  .sale-text-large {
+    padding: 3vw 0 0 0;
+    font-size: 1.5em;
+  }
+
+  .goat-photo {
+    width: 100vw;
+    height: auto;
   }
 }
