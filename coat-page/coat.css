@@ -1,0 +1,95 @@
+body{
+  margin: 0px;
+  background-color: #ffdce1;
+}
+
+header{ 
+  background-color: #d4f3e5;
+  text-align: center;
+}
+
+@media (min-width:800px) {
+  header{ 
+    line-height: 50vh;
+    font-size: 3em;
+    height: 50vh;
+  }
+}
+
+@media (max-width: 800px) {
+  header{
+    line-height: 33vh;
+    font-size: 2em;
+    height: 33vh;
+  }
+}
+
+#navbar{
+  position: sticky;
+  top: 0;
+  display: flex;
+  background-color: #ffdce1;
+}
+
+.nav-tab{
+  width: 25vw;
+  text-align: center;
+  padding: 0.5em 0 0.5em 0;
+  text-decoration: none;
+  color: #000;
+
+}
+
+.nav-tab:hover{
+  background-color: #fffafa;
+}
+
+#sale-banner {
+  position: relative;
+  background: repeating-linear-gradient(45deg, #d4e2f3, white 20px, #d4e2f3 24px);
+  text-align: center;
+  margin: 0;
+}
+
+@media (min-width:800px) {
+  #sale-banner{
+    height: 50vh;
+    width: 50vw;
+  }
+
+  #sale-container {
+    display: flex;
+  }
+
+  .sale-text{
+    margin: 0;
+    line-height: 25vh;
+  }
+
+  #coat-photo {
+    height: 50vh;
+    width: 50vw;
+  }
+}
+
+@media (max-width:800px) {
+  #sale-banner{
+    height: 33vh;
+    width: 100%;
+  }
+
+  .sale-text{
+    margin: 0 15vw 0 15vw;
+    line-height: 15vh;
+    opacity: 1;
+  }
+
+  #coat-photo {
+    height: 33vh;
+    width: 100%;
+  }
+}
+
+.sale-text-large{
+  font-size: 1.5em;
+}

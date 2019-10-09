@@ -1,11 +1,17 @@
+:root{
+    --field-top: 12.5vmin;
+    --field-left: 12.5vmin;
+    --field-side: 75vmin;
+}
+
 body {
     background-color: lightsteelblue;
 }
 
 .field-background {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 12.5vmin;
+    left: 12.5vmin;
     width: 75vmin;
     height: 75vmin;
     background-color: forestgreen;
@@ -13,20 +19,55 @@ body {
 
 .field-horiz {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 12.5vmin;
+    left: 12.5vmin;
     width: 75vmin;
     height: 75vmin;
     background: repeating-linear-gradient( 0deg, white 0vmin, white 0.5vmin, rgba(0,0,0,0) 0.5vmin, rgba(0,0,0,0) 7.5vmin);
     opacity: 0.6;
 }
+
 .field-vert {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 12.5vmin;
+    left: 12.5vmin;
     width: 75vmin;
     height: 75vmin;
     background: repeating-linear-gradient( 90deg, white 0vmin, white 0.5vmin, rgba(0,0,0,0) 0.5vmin, rgba(0,0,0,0) 7.5vmin);
     opacity: 0.6;
 }
 
+
+.start-button {
+    position: absolute;
+    left: 95vmin;
+    top: 12.5vmin;
+    
+}
+
+@media (orientation:portrait) {
+    .start-button {
+	top: 95vmin;
+	left: 12.5vmin;
+    }
+
+}
+
+.snake-container {
+    position: relative;
+    top: 11.2vmin;
+    left: 11.3vmin;
+    height:75vmin;
+    width: 75vmin;
+}
+
+.snake-head {
+    position: absolute;
+    top: 0.5vmin;
+    left: 0.75vmin;
+    height: 6vmin;
+    width: 6vmin;
+    background-color: orange;
+    border-radius: 50%;
+    visibility: hidden;
+}
