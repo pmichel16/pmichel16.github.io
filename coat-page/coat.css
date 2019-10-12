@@ -46,7 +46,6 @@ header h2 {
       margin:0;
   }
 }
-
 /*
   Navbar
 */
@@ -103,13 +102,26 @@ nav{
     display: flex;  
   }
 
-  .sale-banner {
-    width: 50vw;
+  .sale-banner{
+    width: 50%;
+  }
+
+  #sale-winter {
     height: 34vw; /*From picture aspect ratio*/
   }
 
-  .sale-textbox{
+  #sale-winter .sale-textbox {
     height: 24vw;
+  }
+
+  #sale-hoodie {
+    height: 37.5vw;
+  }
+
+  #sale-hoodie .sale-textbox{
+    height: 27.5vw;
+  }
+  .sale-textbox {
     width: 40vw;
     margin: 5vw;
   }
@@ -123,8 +135,8 @@ nav{
     font-size: 1.5em;
   }
 
-  .goat-photo {
-    width: 50vw;
+  .goat-photo{
+    width: 50%;
     height: auto;
   }
 }
@@ -158,4 +170,29 @@ nav{
     width: 100vw;
     height: auto;
   }
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 3.33%;
+  grid-row-gap: 5vh;
+  margin: 5% 3.33%;
+  justify-items: center;
+}
+
+.product-container {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background-color: #fffafa;
+}
+
+.product-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #d4f3e5;
+  padding: 5% 0;
 }
