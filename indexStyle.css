@@ -96,3 +96,9 @@ h1 {
     text-align: center;
     color: var(--light-text-color);
 }
+
+.project-image-preview {
+  width: 94%;
+  height: auto;
+  margin: 3% 3% 0 3%;
+}
