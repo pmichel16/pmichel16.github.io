@@ -55,7 +55,7 @@ nav{
   display: flex;
   background-color: #ffdce1;
   height: 50px;
-  z-index: 1;
+  z-index: 2;
 }
 
 .nav-tab{
@@ -195,4 +195,38 @@ nav{
   text-align: center;
   background-color: #d4f3e5;
   padding: 5% 0;
+}
+
+.product-image{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.add-cart {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-top: 86%;
+  background-color: black;
+  opacity: 0;
+  z-index: 1;
+}
+
+.add-cart:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.add-cart-text {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  color: #ffffff;
+  text-align: center;
+  font-size: 2em;
 }
