@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\coat-page"
+    "\\coat-page",
+    "\\snake-game"
   ],
-  "SelectedNode": "\\indexStyle.css",
+  "SelectedNode": "\\coat-page\\coatScript.js",
   "PreviewInSolutionExplorer": false
 }
