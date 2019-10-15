@@ -24,7 +24,7 @@ header h2 {
   margin: 0;
 }
 
-@media (min-width: 850px) {
+@media (min-width: 700px) {
   header{ 
     height: 50vh;
   }
@@ -40,7 +40,7 @@ header h2 {
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 700px) {
   header {
     font-size: 2em;
     height: 33vh;
@@ -92,11 +92,10 @@ nav{
 
 #sale-winter{
   background: repeating-linear-gradient(45deg, #d4e2f3, white 20px, #d4e2f3 20px);
-  background-color: red;
 }
 
-#sale-sweater {
-  background-color: lightpink;
+#sale-hoodie {
+  background: radial-gradient(white 30%, #ff89a2 100%);
 }
 
 .sale-textbox{
@@ -107,7 +106,7 @@ nav{
   margin: 0;
 }
 
-@media (min-width:850px) {
+@media (min-width:700px) {
   .sale-container {
     display: flex;
   }
@@ -152,7 +151,7 @@ nav{
   }
 }
 
-@media (max-width:850px) {
+@media (max-width:700px) {
   .sale-container {
     display: grid;
     grid-template-columns: 1vw;
@@ -192,7 +191,7 @@ nav{
   justify-items: center;
 }
 
-@media (min-width:850px) {
+@media (min-width: 700px) {
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
     grid-column-gap: 3.33vw;
@@ -201,12 +200,21 @@ nav{
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 700px) {
   .product-grid{
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 3vw;
     grid-row-gap: 3vh;
     margin: 5% 2%;
+  }
+}
+
+@media (max-width: 450px) {
+  .product-grid{
+    grid-template-columns: 1fr;
+    grid-column-gap: 3vw;
+    grid-row-gap: 3vh;
+    margin: 5% 5%;
   }
 }
 
@@ -264,4 +272,10 @@ nav{
   color: #ffffff;
   text-align: center;
   font-size: 2em;
+}
+
+footer{
+  background-color: #d4f3e5;
+  margin: 0;
+  padding: 2vh 0;
 }
