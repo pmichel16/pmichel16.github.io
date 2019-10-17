@@ -1,0 +1,86 @@
+body {
+  background-color: #1d4200;
+  margin: 4vh 4vw;
+  font-family: 'Poppins', sans-serif;
+}
+
+/*
+Input Section
+*/
+.entry-container {
+  height: 56vh;
+  display: grid;
+  grid-template-rows: 47.5%;
+  grid-row-gap: 5%;
+  justify-items: center;
+
+}
+
+.entry-box {
+  position: relative;
+  background-color: #ced6a6;
+  max-width: 800px;
+  width: 100%;
+  border-radius: 25px;
+  box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+}
+
+.input-textbox {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.entry-box p{
+  position: absolute;
+  top: 65%;
+  width: 100%;
+  text-align: center;
+}
+
+input[type=text] {
+  height: 1.2em;
+}
+
+/*
+Output section
+*/ 
+
+.output-container {
+  height: 33.5vh;
+  margin-top: 2.5vh;
+  display: grid;
+  grid-template-rows: 25% 75%;
+  justify-items: center;
+}
+
+input[type=button] {
+  background-color: #8eb666;
+  border: none;
+  display: inline-block;
+  height: 2em;
+  box-shadow: 3px 3px 20px rgba(0,0,0,0.4);
+}
+
+input[type=button]:hover {
+  cursor: pointer;
+}
+
+.output-textbox {
+  background-color: #ced6a6;
+  position: relative;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  border-radius: 25px;
+  max-width: 800px;
+  box-shadow: 5px 5px 20px rgba(0,0,0,0.4);
+}
+
+.output-textbox p {
+  position: absolute;
+  top: 33%;
+  width: 100%;
+}
