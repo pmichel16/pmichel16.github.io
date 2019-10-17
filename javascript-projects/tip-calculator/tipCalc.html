@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script type="text/javascript" src="tipCalcScript.js"></script>
+    <link rel="stylesheet" type = "text/css" href="tipCalcStyle.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <title>Tip Calculator</title>
+  </head>
+  <body>
+    <div class="entry-container">
+      <div class="entry-box">
+        <div class="input-textbox">
+          Bill Amount: $<input id="bill" type="text"></input>
+        </div>
+        <p id="billWarning"></p>
+      </div>
+      <div class="entry-box">
+        <div class="input-textbox">
+          Tip Percent: <input id="percent" type="text" onkeydown="enterPercent(event)"></input>%
+        </div>
+        <p id="percentWarning"></p>
+      </div>
+    </div> 
+    <div class="output-container">
+      <input type="button" value="Calculate!" onclick="calculateTip()"></input>
+      <div class="output-textbox">
+        <p id="tip"></p>
+      </div>
+    </div>
+  </body>
+
+</html>
