@@ -9,7 +9,11 @@ body {
 }
 
 h1 {
-    font-size: 32px;
+    font-size: 2.7em;
+}
+
+h2 {
+  font-size: 2.2em;
 }
 
 .welcome-section {
@@ -75,7 +79,8 @@ h1 {
     position: relative;
     background-color: #748b88;
     width: 100%; 
-    padding-bottom: 100%;
+    height: 0;
+    padding-top: 100%;
     color: var(--light-text-color);
 }
 
@@ -90,8 +95,10 @@ h1 {
     position: absolute;
     background-color: #5b6d6b;
     top: 80%;
-    height: 20%;
+    padding-top: 4%;
+    height: 16%;
     width: 100%;
+    font-size: 1.3em;
     text-decoration: none;
     text-align: center;
     color: var(--light-text-color);
