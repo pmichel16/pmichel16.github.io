@@ -1,29 +1,26 @@
 function startGame() {
-  if (confirm('Press OK to begin!')) {
-    var head = document.getElementById("snake-head");
-    head.style.visibility = "visible";
-    moveHead();
-  }
+  var head = document.getElementById("snake-head");
+  head.style.visibility = "visible";
+  moveHead();
 }
 
 function moveHead() {
+  const vmin = Math.min(document.documentElement.clientWidth, document.documentElement.clientHeight);
   const head = document.getElementById("snake-head");
-  const headStyle = getComputedStyle(head);
-  const headLeft = headStyle.left;
-  var pos = parseFloat(headStyle.left);
-  var id = setInterval(frame,5);
-
-  alert(head.style.left);
+  const headLeft = getComputedStyle(head).left;
+  var pos = parseFloat(headLeft);
+  //Each square is 7.5vmin by 7.5vmin, so find when the circle has moved one square.
+  const posPlus = vmin * 0.075 + pos;
+  var id = setInterval(frame, 10);
 
   function frame( ) {
-    if (pos > 40) {
+    if (pos > posPlus) {
+      pos = posPlus;
       clearInterval(id);
     } else {
-      pos+=0.5;
-      head.style.left = pos + 'px';
+      pos+=1.5;
     }
+    head.style.left = pos + 'px';
   }
-
-  alert(head.style.left);
   
 }
