@@ -1,19 +1,13 @@
-:root{
-    --field-top: 12.5vmin;
-    --field-left: 12.5vmin;
-    --field-side: 75vmin;
-}
-
 body {
     background-color: lightsteelblue;
 }
 
-.field-background {
+#field-background {
     position: relative;
-    top: 12vmin;
-    left: 12vmin;
-    width: 75vmin;
-    height: 75vmin;
+    top: 30px;
+    left: 30px;
+    width: 400px;
+    height: 400px;
     background-color: forestgreen;
 }
 
@@ -21,9 +15,9 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 75vmin;
-    height: 75vmin;
-    background: repeating-linear-gradient( 0deg, white 0vmin, white 0.5vmin, rgba(0,0,0,0) 0.5vmin, rgba(0,0,0,0) 7.5vmin);
+    width: 400px;
+    height: 400px;
+    background: repeating-linear-gradient( 0deg, white 0px, white 3px, rgba(0,0,0,0) 3px, rgba(0,0,0,0) 40px);
     opacity: 0.6;
 }
 
@@ -31,21 +25,29 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 75vmin;
-    height: 75vmin;
-    background: repeating-linear-gradient( 90deg, white 0vmin, white 0.5vmin, rgba(0,0,0,0) 0.5vmin, rgba(0,0,0,0) 7.5vmin);
+    width: 400px;
+    height: 400px;
+    background: repeating-linear-gradient( 90deg, white 0px, white 3px, rgba(0,0,0,0) 3px, rgba(0,0,0,0) 40px);
     opacity: 0.6;
 }
 
-.snake-head {
+#snake-head {
   position: absolute;
-  top: 0.5vmin;
-  left: 1vmin;
-  height: 6vmin;
-  width: 6vmin;
+  top: 3px;
+  left: 6px;
+  height: 32px;
+  width: 32px;
   background-color: orange;
   border-radius: 50%;
   visibility: hidden;
+}
+
+.snake-body {
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  background-color: orange;
+  border-radius: 50%;
 }
 
 
