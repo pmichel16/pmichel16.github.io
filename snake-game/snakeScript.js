@@ -2,6 +2,7 @@ var keyDown = 39;
 var posX = 0;
 var posY = 0;
 var snakeLen = 1;
+var bodyPos = [];
 
 /*
  * Upon clicking the start button, resets head position and starts moving the head to the right.
@@ -97,6 +98,13 @@ function moveHead(dirKey, lastTop, lastLeft) {
       (moveX) ? posX++ : posY++;
       clearInterval(animate); 
 
+      //Update the position of the head based on pos
+      if (moveX) {
+        head.style.left = pos + 'px';
+      } else {
+        head.style.top = pos + 'px';
+      }
+
       //If the snake hasn't reached length 5 yet, spawn another body segment. 
       if(snakeLen< 2) {
         addBody(dir, head);
@@ -107,14 +115,15 @@ function moveHead(dirKey, lastTop, lastLeft) {
       if(!checkGameLost()) moveHead(keyDown, head.style.top, head.style.left); 
     } else {
       pos += 1.5;
-      if(snakeLen > 1) moveBody(false, lastTop, lastLeft)
-    }
 
-    //Update the position of the head based on pos
-    if (moveX) {
-      head.style.left = pos + 'px';
-    } else {
-      head.style.top = pos + 'px';
+      //Update the position of the head based on pos
+      if (moveX) {
+        head.style.left = pos + 'px';
+      } else {
+        head.style.top = pos + 'px';
+      }
+
+      if(snakeLen > 1) moveBody(false, lastTop, lastLeft)
     }
   }
 
@@ -130,6 +139,13 @@ function moveHead(dirKey, lastTop, lastLeft) {
       (moveX) ? posX--: posY--;
       clearInterval(animate);
 
+      //Update the position of the head based on pos
+      if (moveX) {
+        head.style.left = pos + 'px';
+      } else {
+        head.style.top = pos + 'px';
+      }
+
       //If the snake hasn't reached length 5 yet, spawn another body segment. 
       if(snakeLen< 2) {
         addBody(dir, head);
@@ -142,14 +158,15 @@ function moveHead(dirKey, lastTop, lastLeft) {
       }
     } else {
       pos -= 1.5;
-      if(snakeLen > 1) moveBody(false, lastTop, lastLeft)
-    }
 
-    //Update the position of the head based on pos
-    if (moveX) {
-      head.style.left = pos + 'px';
-    } else {
-      head.style.top = pos + 'px';
+      //Update the position of the head based on pos
+      if (moveX) {
+        head.style.left = pos + 'px';
+      } else {
+        head.style.top = pos + 'px';
+      }
+
+      if(snakeLen > 1) moveBody(false, lastTop, lastLeft)
     }
   }
 
