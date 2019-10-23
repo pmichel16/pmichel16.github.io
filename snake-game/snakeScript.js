@@ -1,8 +1,17 @@
+function Position(xPos,yPos){
+  this.xPos = xPos;
+  this.yPos = yPos;
+}
+const sqWidth = 40;
+const topStart = 3;
+const leftStart = 6;
+
 var keyDown = 39;
-var posX = 0;
-var posY = 0;
+var headPos = new Position(0, 0);
 var snakeLen = 1;
+var startLen = 3;
 var bodyPos = [];
+var applePos = new Position(0, 0);
 
 /*
  * Upon clicking the start button, resets head position and starts moving the head to the right.
@@ -10,18 +19,25 @@ var bodyPos = [];
 function startGame() {
   var head = document.getElementById("snake-head");
   head.style.visibility = "visible";
-  head.style.top = "3px";
-  head.style.left = "6px"; 
-  posX = 0;  
-  posY = 0;
+  head.style.top = topStart + 'px';
+  head.style.left = leftStart + 'px'; 
+  headPos.xPos = 0;
+  headPos.yPos = 0;
   keyDown = 39;
   snakeLen = 1;
+  bodyPos = [];
 
   //Remove existing body segments
   const body = document.getElementsByClassName("snake-body");
-  for(var i = 0; i < body.length; i++) {
+  while(body.length > 0) {
     body[0].remove();
   }
+
+  //Spawn a starting apple
+  applePos = spawnApple();
+  document.getElementById("apple").style.visibility = "visible";
+
+  //Start moving the snake
   moveHead(keyDown, head.style.top, head.style.left);
 }
 
@@ -75,9 +91,9 @@ function moveHead(dirKey, lastTop, lastLeft) {
     pos = parseFloat(head.style.top);
   }
 
-  //Each square is 40px by 40px so find when the circle has moved one square.
-  const posPlus = pos + 40;
-  const posMinus = pos - 40;
+  //Each square is sqWidth px by sqWidth px so find when the circle has moved one square.
+  const posPlus = pos + sqWidth;
+  const posMinus = pos - sqWidth;
 
   //If right or down, move "forwards", otherwise move "backwards".
   var animate;
@@ -91,11 +107,11 @@ function moveHead(dirKey, lastTop, lastLeft) {
    * Move head "forwards" one unit (down or right)
    */
   function framePlus() {
-    if (pos > posPlus) {
-      //If the head is at its final destination, update pos and posX/posY
+    if (pos >= posPlus) {
+      //If the head is at its final destination, update pos and xPos/yPos
       pos = posPlus;
       if(snakeLen > 1) moveBody(true, lastTop, lastLeft);
-      (moveX) ? posX++ : posY++;
+      (moveX) ? headPos.xPos++ : headPos.yPos++;
       clearInterval(animate); 
 
       //Update the position of the head based on pos
@@ -105,17 +121,21 @@ function moveHead(dirKey, lastTop, lastLeft) {
         head.style.top = pos + 'px';
       }
 
-      //If the snake hasn't reached length 5 yet, spawn another body segment. 
-      if(snakeLen< 2) {
+      //If the snake hasn't reached length startLen yet, spawn another body segment. 
+      if(snakeLen < startLen) {
         addBody(dir, head);
-        snakeLen++;
+      }
+
+      //Check whether the snake ate the apple
+      if (headPos.xPos == applePos.xPos && headPos.yPos == applePos.yPos) {
+        applePos = spawnApple();
+        addBody(dir, head);
       }
 
       //If the game hasn't been lost, move head again.
       if(!checkGameLost()) moveHead(keyDown, head.style.top, head.style.left); 
     } else {
       pos += 1.5;
-
       //Update the position of the head based on pos
       if (moveX) {
         head.style.left = pos + 'px';
@@ -132,11 +152,11 @@ function moveHead(dirKey, lastTop, lastLeft) {
    */
   function frameMinus() {
 
-    if (pos < posMinus) {
-      //If the head is at its final destination, update pos and posX/posY
+    if (pos <= posMinus) {
+      //If the head is at its final destination, update pos and xPos/yPos
       pos = posMinus;
       if(snakeLen > 1) moveBody(true, lastTop, lastLeft);
-      (moveX) ? posX--: posY--;
+      (moveX) ? headPos.xPos--: headPos.yPos--;
       clearInterval(animate);
 
       //Update the position of the head based on pos
@@ -146,10 +166,15 @@ function moveHead(dirKey, lastTop, lastLeft) {
         head.style.top = pos + 'px';
       }
 
-      //If the snake hasn't reached length 5 yet, spawn another body segment. 
-      if(snakeLen< 2) {
+      //If the snake hasn't reached length startLen yet, spawn another body segment. 
+      if(snakeLen < startLen) {
         addBody(dir, head);
-        snakeLen++;
+      }
+
+      //Check whether the snake ate the apple
+      if (headPos.xPos == applePos.xPos && headPos.yPos == applePos.yPos) {
+        applePos = spawnApple();
+        addBody(dir, head);
       }
 
       //If the game hasn't been lost, move head again.
@@ -181,16 +206,14 @@ function moveHead(dirKey, lastTop, lastLeft) {
         var xDir = false;
         var yDir = false;
         var moveDir = "";
-        var lastBody;
         if(i == 0) {
-          body[i].style.top == headTop ? xDir = true : yDir = true;
-          if(xDir) parseFloat(body[i].style.left) < parseFloat(headLeft) ? moveDir = "right" : moveDir = "left";
-          if(yDir) parseFloat(body[i].style.top) < parseFloat(headTop) ? moveDir = "down" : moveDir = "up"; 
+          bodyPos[0].yPos == headPos.yPos ? xDir = true : yDir = true;
+          if(xDir) bodyPos[0].xPos < headPos.xPos ? moveDir = "right" : moveDir = "left";
+          if(yDir) bodyPos[0].yPos < headPos.yPos ? moveDir = "down" : moveDir = "up"; 
         } else {
-          lastBody = body[i-1];
-          body[i].style.top == lastBody.style.top ? xDir =true : yDir = true;
-          if(xDir) parseFloat(body[i].style.left) < parseFloat(lastBody.style.left) ? moveDir = "right" : moveDir = "left";
-          if(yDir) parseFloat(body[i].style.top) < parseFloat(lastBody.style.top) ? moveDir = "down" : moveDir = "up"; 
+          bodyPos[i].yPos == bodyPos[i-1].yPos ? xDir = true : yDir = true;
+          if(xDir) bodyPos[i].xPos < bodyPos[i-1].xPos ? moveDir = "right" : moveDir = "left";
+          if(yDir) bodyPos[i].yPos < bodyPos[i-1].yPos ? moveDir = "down" : moveDir = "up"; 
         }
         switch(moveDir) {
           case "left":
@@ -206,10 +229,17 @@ function moveHead(dirKey, lastTop, lastLeft) {
             body[i].style.top = parseFloat(body[i].style.top) + 1.5 + 'px'
             break;
         }
-      } else { 
-        if(i==0) {
-          body[i].style.top = headTop;
+      } else {
+        if (i == 0) {
+          for (var j = 1; j < bodyPos.length; j++) {
+            bodyPos[j] = bodyPos[j - 1];
+          }
+          bodyPos[0] = new Position(headPos.xPos, headPos.yPos);
+          body[i].style.top = (headPos.yPos) * 40 + topStart + 'px';
           body[i].style.left = headLeft;
+        } else {
+          body[i].style.top = (bodyPos[i].yPos) * 40 + topStart + 'px';
+          body[i].style.left = (bodyPos[i].xPos) * 40 + leftStart + 'px';
         }
       }
     } 
@@ -225,19 +255,19 @@ function checkGameLost(){
   switch(keyDown) {
     //Left
     case 37:
-      lost = posX <= 0;
+      lost = headPos.xPos <= 0;
       break;
     //Up
     case 38:
-      lost = posY <= 0;
+      lost = headPos.yPos <= 0;
       break;
     //Right
     case 39:
-      lost = posX >=9; 
+      lost = headPos.xPos >=9; 
       break;
     //Down
     case 40:
-      lost = posY >=9;
+      lost = headPos.yPos >=9;
       break;
   }
 
@@ -283,5 +313,36 @@ function addBody(dir, head) {
 
   //Attach the new div to the field
   const board = document.getElementById("field-background");
-  board.appendChild(newBody);  
+  board.appendChild(newBody); 
+
+  //Add the new position to the array and increment snake length
+  if (snakeLen < startLen) {
+    bodyPos.push(new Position(0, 0));
+  } else {
+    bodyPos.push(new Position(bodyPos[bodyPos.length - 1].xPos, bodyPos[bodyPos.length - 1].yPos))
+  }
+  snakeLen++;
+}
+
+function spawnApple() {
+  var x = Math.floor(Math.random() * 10);
+  var y = Math.floor(Math.random() * 10);
+  var apple = new Position(x, y);
+
+  //Make sure the apple is not within the body or head, and respawn if it is.
+  var respawn = false;
+  (apple.xPos == headPos.xPos && apple.yPos == headPos.yPos) ? respawn = true : respawn = false;
+  for (var i = 0; i < bodyPos.length; i++) {
+    (apple.xPos == bodyPos[i].xPos && apple.yPos == bodyPos[i].yPos) ? respawn = true : respawn = false;
+  }
+  if (respawn) {
+    apple = spawnApple();
+  }
+
+  //Make the apple appear in the correct position.
+  const appleHtml = document.getElementById("apple");
+  appleHtml.style.top = apple.yPos * 40 + topStart + 'px';
+  appleHtml.style.left = apple.xPos * 40 + leftStart + 'px';
+
+  return apple;
 };

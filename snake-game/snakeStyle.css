@@ -50,6 +50,15 @@ body {
   border-radius: 50%;
 }
 
+#apple {
+  position: absolute;
+  background-color: red;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  visibility: hidden;
+}
+
 
 .start-button {
     position: absolute;
