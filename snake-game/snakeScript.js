@@ -314,4 +314,9 @@ function spawnApple() {
   appleHtml.style.left = apple.xPos * 40 + leftStart + 'px';
 
   return apple;
-};
+}
+
+function showOptions() {
+  var opScreen = document.getElementById("option-screen");
+  opScreen.style.visibility === "visible" ? opScreen.style.visibility = "hidden" : opScreen.style.visibility = "visible";
+}
