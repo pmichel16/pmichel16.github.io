@@ -59,18 +59,47 @@ body {
   visibility: hidden;
 }
 
-
-.start-button {
-    position: absolute;
-    left: 95vmin;
-    top: 12.5vmin;
-    
+#button-container {
+  display: flex;
+  position: relative;
+  top: 40px;
+  left: 30px;
 }
 
-@media (orientation:portrait) {
-    .start-button {
-	top: 95vmin;
-	left: 12.5vmin;
-    }
+.start-button {
+  width: 80px;
+  height: 25px;
+  background-color: #efffef;
+  border-color: forestgreen;
+  border-style: solid;
+  cursor: pointer;
+}
 
+
+.options-button {
+  position: relative;
+  left: 10px;
+  width: 80px;
+  height: 25px;
+  background-color: #efffef;
+  border-color: forestgreen;
+  border-style: solid;
+  cursor: pointer;
+}
+
+#option-screen {
+  display: flex;
+  position: absolute;
+  top: 38px;
+  left: 38px;
+  height: 400px;
+  width: 400px;
+  background-color: forestgreen;
+  visibility: hidden;
+}
+
+#option-form {
+  height: 360px;
+  width: 360px;
+  margin: 20px;
 }
