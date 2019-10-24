@@ -9,7 +9,7 @@ const leftStart = 6;
 var keyDown = 39;
 var headPos = new Position(0, 0);
 var snakeLen = 1;
-var startLen = 3;
+var startLen = 12;
 var bodyPos = [];
 var applePos = new Position(0, 0);
 
@@ -38,7 +38,7 @@ function startGame() {
   document.getElementById("apple").style.visibility = "visible";
 
   //Start moving the snake
-  moveHead(keyDown, head.style.top, head.style.left);
+  moveHead(keyDown, new Position(0,0));
 }
 
 /*
@@ -77,7 +77,7 @@ function convertDirToString(dirKey) {
  * Moves the head one unit in the specified direction, then checks to see if moving again will result in 
  * losing the game. If it doesn't, calls self.
  */ 
-function moveHead(dirKey, lastTop, lastLeft) {
+function moveHead(dirKey, prevBodyEnd) {
   //Convert dir to a string for easier use
   var dir = convertDirToString(dirKey);
   const head = document.getElementById("snake-head");
@@ -108,42 +108,22 @@ function moveHead(dirKey, lastTop, lastLeft) {
    */
   function framePlus() {
     if (pos >= posPlus) {
-      //If the head is at its final destination, update pos and xPos/yPos
+      //Update pos to the final destination
       pos = posPlus;
-      if(snakeLen > 1) moveBody(true, lastTop, lastLeft);
-      (moveX) ? headPos.xPos++ : headPos.yPos++;
-      clearInterval(animate); 
 
-      //Update the position of the head based on pos
-      if (moveX) {
-        head.style.left = pos + 'px';
-      } else {
-        head.style.top = pos + 'px';
-      }
+      //Update the CSS position of the head
+      updateHeadCSS(head,pos,moveX);
 
-      //If the snake hasn't reached length startLen yet, spawn another body segment. 
-      if(snakeLen < startLen) {
-        addBody(dir, head);
-      }
+      //Update snake position and move body
+      updateSnake(true);
 
-      //Check whether the snake ate the apple
-      if (headPos.xPos == applePos.xPos && headPos.yPos == applePos.yPos) {
-        applePos = spawnApple();
-        addBody(dir, head);
-      }
-
-      //If the game hasn't been lost, move head again.
-      if(!checkGameLost()) moveHead(keyDown, head.style.top, head.style.left); 
     } else {
       pos += 1.5;
-      //Update the position of the head based on pos
-      if (moveX) {
-        head.style.left = pos + 'px';
-      } else {
-        head.style.top = pos + 'px';
-      }
+      //Update the CSS position of the head based on pos
+      updateHeadCSS(head,pos,moveX);
 
-      if(snakeLen > 1) moveBody(false, lastTop, lastLeft)
+      //Move the rest of the body, if it exists.
+      if(snakeLen > 1) moveBody(false);
     }
   }
 
@@ -153,19 +133,40 @@ function moveHead(dirKey, lastTop, lastLeft) {
   function frameMinus() {
 
     if (pos <= posMinus) {
-      //If the head is at its final destination, update pos and xPos/yPos
+      //Update pos to the final destination
       pos = posMinus;
-      if(snakeLen > 1) moveBody(true, lastTop, lastLeft);
-      (moveX) ? headPos.xPos--: headPos.yPos--;
-      clearInterval(animate);
+      
+      //Update the CSS position of the head
+      updateHeadCSS(head,pos,moveX);
 
+      //Update snake length and move body
+      updateSnake(false);
+
+    } else {
+      pos -= 1.5;
       //Update the position of the head based on pos
-      if (moveX) {
-        head.style.left = pos + 'px';
-      } else {
-        head.style.top = pos + 'px';
-      }
+      updateHeadCSS(head,pos,moveX);
 
+      //Move the body, if it exists.
+      if(snakeLen > 1) moveBody(false);
+    }
+  }
+  
+  /*
+   * After the snake has moved one unit, updates information about position of the head and body.
+   */
+  function updateSnake(moveForward) {
+      
+      //Update head position and move body
+      prevBodyEnd = bodyPos[bodyPos.length-1];
+      if(snakeLen > 1) moveBody(true);
+      if(moveForward) {
+        (moveX) ? headPos.xPos++ : headPos.yPos++;
+      } else {
+        (moveX) ? headPos.xPos-- : headPos.yPos--;
+      }
+      clearInterval(animate); 
+      
       //If the snake hasn't reached length startLen yet, spawn another body segment. 
       if(snakeLen < startLen) {
         addBody(dir, head);
@@ -174,78 +175,76 @@ function moveHead(dirKey, lastTop, lastLeft) {
       //Check whether the snake ate the apple
       if (headPos.xPos == applePos.xPos && headPos.yPos == applePos.yPos) {
         applePos = spawnApple();
-        addBody(dir, head);
+        addBody(dir, head, prevBodyEnd);
       }
 
       //If the game hasn't been lost, move head again.
-      if(!checkGameLost()) {  
-        moveHead(keyDown, head.style.top, head.style.left); 
-      }
-    } else {
-      pos -= 1.5;
-
-      //Update the position of the head based on pos
-      if (moveX) {
-        head.style.left = pos + 'px';
-      } else {
-        head.style.top = pos + 'px';
-      }
-
-      if(snakeLen > 1) moveBody(false, lastTop, lastLeft)
-    }
-  }
-
-  /*
-   * Move body one unit. Each body segment will move towards the one before it.
-   */
-  function moveBody(moveDone, headTop, headLeft) {
-    const body = document.getElementsByClassName("snake-body");
-    for (var i = 0; i < body.length; i++) {
-      if(!moveDone) {
-        //Determine which direction to move
-        var xDir = false;
-        var yDir = false;
-        var moveDir = "";
-        if(i == 0) {
-          bodyPos[0].yPos == headPos.yPos ? xDir = true : yDir = true;
-          if(xDir) bodyPos[0].xPos < headPos.xPos ? moveDir = "right" : moveDir = "left";
-          if(yDir) bodyPos[0].yPos < headPos.yPos ? moveDir = "down" : moveDir = "up"; 
-        } else {
-          bodyPos[i].yPos == bodyPos[i-1].yPos ? xDir = true : yDir = true;
-          if(xDir) bodyPos[i].xPos < bodyPos[i-1].xPos ? moveDir = "right" : moveDir = "left";
-          if(yDir) bodyPos[i].yPos < bodyPos[i-1].yPos ? moveDir = "down" : moveDir = "up"; 
-        }
-        switch(moveDir) {
-          case "left":
-            body[i].style.left = parseFloat(body[i].style.left) - 1.5 + 'px'
-            break;
-          case "up":
-            body[i].style.top = parseFloat(body[i].style.top) - 1.5 + 'px'
-            break;
-          case "right":
-            body[i].style.left = parseFloat(body[i].style.left) + 1.5 + 'px'
-            break;
-          case "down":
-            body[i].style.top = parseFloat(body[i].style.top) + 1.5 + 'px'
-            break;
-        }
-      } else {
-        if (i == 0) {
-          for (var j = 1; j < bodyPos.length; j++) {
-            bodyPos[j] = bodyPos[j - 1];
-          }
-          bodyPos[0] = new Position(headPos.xPos, headPos.yPos);
-          body[i].style.top = (headPos.yPos) * 40 + topStart + 'px';
-          body[i].style.left = headLeft;
-        } else {
-          body[i].style.top = (bodyPos[i].yPos) * 40 + topStart + 'px';
-          body[i].style.left = (bodyPos[i].xPos) * 40 + leftStart + 'px';
-        }
-      }
-    } 
+      if(!checkGameLost()) moveHead(keyDown, prevBodyEnd); 
   }
 
 }
+
+/*
+ * Updates CSS position of head based on pos
+ */
+function updateHeadCSS(head,pos, moveX) {
+  if (moveX) {
+    head.style.left = pos + 'px';
+  } else {
+    head.style.top = pos + 'px';
+  } 
+}
+
+/*
+ * Move body one unit. Each body segment will move towards the one before it.
+ */
+function moveBody(moveDone) {
+  const body = document.getElementsByClassName("snake-body");
+  for (var i = 0; i < body.length; i++) {
+    if(!moveDone) {
+      //Determine which direction to move
+      var xDir = false;
+      var yDir = false;
+      var moveDir = "";
+      if(i == 0) {
+        bodyPos[0].yPos == headPos.yPos ? xDir = true : yDir = true;
+        if(xDir) bodyPos[0].xPos < headPos.xPos ? moveDir = "right" : moveDir = "left";
+        if(yDir) bodyPos[0].yPos < headPos.yPos ? moveDir = "down" : moveDir = "up";         
+      } else {
+        bodyPos[i].yPos == bodyPos[i-1].yPos ? xDir = true : yDir = true;
+        if(xDir) bodyPos[i].xPos < bodyPos[i-1].xPos ? moveDir = "right" : moveDir = "left";
+        if(yDir) bodyPos[i].yPos < bodyPos[i-1].yPos ? moveDir = "down" : moveDir = "up"; 
+      }
+      switch(moveDir) {
+        case "left":
+          body[i].style.left = parseFloat(body[i].style.left) - 1.5 + 'px'
+          break;
+        case "up":
+          body[i].style.top = parseFloat(body[i].style.top) - 1.5 + 'px'
+          break;
+        case "right":
+          body[i].style.left = parseFloat(body[i].style.left) + 1.5 + 'px'
+          break;
+        case "down":
+          body[i].style.top = parseFloat(body[i].style.top) + 1.5 + 'px'
+          break;
+      }
+    } else {
+      if (i == 0) {
+        for (var j = bodyPos.length - 1; j > 0; j--) {
+          bodyPos[j] = new Position(bodyPos[j - 1].xPos, bodyPos[j - 1].yPos);
+        }
+        bodyPos[0] = new Position(headPos.xPos, headPos.yPos);
+        body[i].style.top = (headPos.yPos) * 40 + topStart + 'px';
+        body[i].style.left = (headPos.xPos) * 40 + leftStart + 'px';
+      } else {
+        body[i].style.top = (bodyPos[i].yPos) * 40 + topStart + 'px';
+        body[i].style.left = (bodyPos[i].xPos) * 40 + leftStart + 'px';
+      }
+    }
+  } 
+}
+
 
 /*
  * Checks whether the user has lost the game, based on their position and which key they have last pressed.
@@ -277,50 +276,20 @@ function checkGameLost(){
 /*
  * Adds a new body segment to the snake.
  */
-function addBody(dir, head) {
+function addBody(dir, head, pos = new Position(0,0)) {
   var newBody = document.createElement("div");
   newBody.className = "snake-body";
-  var oldBody;
-
-  //If the length is 1, attach the new body after the head. 
-  if(snakeLen == 1) {
-    oldBody = head;
-  } else {
-    //Otherwise, find the last body segment, and attach it after that one. 
-    const oldBodies = document.getElementsByClassName("snake-body");
-    oldBody = oldBodies[oldBodies.length - 1];
-  }
 
   //Attaching the head in the proper place
-  switch(dir) {
-    case "left":
-      newBody.style.top = oldBody.style.top;
-      newBody.style.left = parseFloat(oldBody.style.left) + 40 + 'px';
-      break;
-    case "up":
-      newBody.style.top = parseFloat(oldBody.style.top) + 40 + 'px';
-      newBody.style.left = oldBody.style.left;
-      break;
-    case "right":
-      newBody.style.top = oldBody.style.top;
-      newBody.style.left = parseFloat(oldBody.style.left) - 40 + 'px';
-      break;
-    case "up":
-      newBody.style.top = parseFloat(oldBody.style.top) - 40 + 'px';
-      newBody.style.left = oldBody.style.left;
-      break;
-  }
-
+  newBody.style.top = (pos.yPos) * 40 + topStart + 'px';
+  newBody.style.left = (pos.xPos) * 40 + leftStart + 'px';
+ 
   //Attach the new div to the field
   const board = document.getElementById("field-background");
   board.appendChild(newBody); 
 
   //Add the new position to the array and increment snake length
-  if (snakeLen < startLen) {
-    bodyPos.push(new Position(0, 0));
-  } else {
-    bodyPos.push(new Position(bodyPos[bodyPos.length - 1].xPos, bodyPos[bodyPos.length - 1].yPos))
-  }
+  bodyPos.push(pos);
   snakeLen++;
 }
 
@@ -331,9 +300,9 @@ function spawnApple() {
 
   //Make sure the apple is not within the body or head, and respawn if it is.
   var respawn = false;
-  (apple.xPos == headPos.xPos && apple.yPos == headPos.yPos) ? respawn = true : respawn = false;
+  if (apple.xPos == headPos.xPos && apple.yPos == headPos.yPos) respawn = true;
   for (var i = 0; i < bodyPos.length; i++) {
-    (apple.xPos == bodyPos[i].xPos && apple.yPos == bodyPos[i].yPos) ? respawn = true : respawn = false;
+    if (apple.xPos == bodyPos[i].xPos && apple.yPos == bodyPos[i].yPos) respawn = true;
   }
   if (respawn) {
     apple = spawnApple();
