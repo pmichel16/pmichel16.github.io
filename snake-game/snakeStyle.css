@@ -1,5 +1,6 @@
 body {
     background-color: lightsteelblue;
+    width: 500px;
 }
 
 #field-background {
@@ -40,6 +41,7 @@ body {
   background-color: orange;
   border-radius: 50%;
   visibility: hidden;
+  z-index: 2;
 }
 
 .snake-body {
@@ -52,10 +54,9 @@ body {
 
 #apple {
   position: absolute;
-  background-color: red;
+  background-image: url("apple.png");
   height: 32px;
   width: 32px;
-  border-radius: 50%;
   visibility: hidden;
 }
 
@@ -95,6 +96,7 @@ body {
   height: 400px;
   width: 400px;
   background-color: forestgreen;
+  z-index: 3;
   visibility: hidden;
 }
 
@@ -102,4 +104,13 @@ body {
   height: 360px;
   width: 360px;
   margin: 20px;
+}
+
+#error-screen {
+  position: absolute;
+  left: 460px;
+  top: 38px;
+  width: 300px;
+  height: 100px;
+
 }

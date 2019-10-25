@@ -9,36 +9,44 @@ const leftStart = 6;
 var keyDown = 39;
 var headPos = new Position(0, 0);
 var snakeLen = 1;
-var startLen = 12;
+var startLen = 5;
+var speed = 1.5;
 var bodyPos = [];
 var applePos = new Position(0, 0);
+var playing = false;
 
 /*
  * Upon clicking the start button, resets head position and starts moving the head to the right.
  */
 function startGame() {
-  var head = document.getElementById("snake-head");
-  head.style.visibility = "visible";
-  head.style.top = topStart + 'px';
-  head.style.left = leftStart + 'px'; 
-  headPos.xPos = 0;
-  headPos.yPos = 0;
-  keyDown = 39;
-  snakeLen = 1;
-  bodyPos = [];
+  if (!playing) {
+    var head = document.getElementById("snake-head");
+    head.style.visibility = "visible";
+    head.style.top = topStart + 'px';
+    head.style.left = leftStart + 'px';
+    headPos.xPos = 0;
+    headPos.yPos = 0;
+    document.getElementById("error-message").innerText = "";
+    keyDown = 39;
+    snakeLen = 1;
+    startLen = getLength();
+    speed = getSpeed();
+    bodyPos = [];
+    playing = true;
 
-  //Remove existing body segments
-  const body = document.getElementsByClassName("snake-body");
-  while(body.length > 0) {
-    body[0].remove();
+    //Remove existing body segments
+    const body = document.getElementsByClassName("snake-body");
+    while (body.length > 0) {
+      body[0].remove();
+    }
+
+    //Spawn a starting apple
+    applePos = spawnApple();
+    document.getElementById("apple").style.visibility = "visible";
+
+    //Start moving the snake
+    moveHead(keyDown, new Position(0, 0));
   }
-
-  //Spawn a starting apple
-  applePos = spawnApple();
-  document.getElementById("apple").style.visibility = "visible";
-
-  //Start moving the snake
-  moveHead(keyDown, new Position(0,0));
 }
 
 /*
@@ -71,6 +79,41 @@ function convertDirToString(dirKey) {
     default:
   }
   return dir;
+}
+
+/*
+ * Returns a value for speed based on which radio button is selected.
+ */
+function getSpeed() {
+  var speed = 0;
+  if (document.getElementById("rSlow").checked) {
+    speed = 0.75;
+  } else if (document.getElementById("rMed").checked) {
+    speed = 1.5;
+  } else if (document.getElementById("rFast").checked) {
+    speed = 3;
+  } else if (document.getElementById("rLight").checked) {
+    speed = 8;
+  }
+  return speed;
+}
+
+/*
+ * If a positive number was typed in lenBox, returns the number; otherwise returns 5 (default length).
+ */
+function getLength() {
+  var len = 5;
+  const inputLen = (document.getElementById("lenBox").value);
+  //Number between 1 and 99.
+  if (inputLen.match(/^[1-9][0-9]{0,1}$/)) {
+    len = Number(inputLen);
+    document.getElementById("error-message").innerText = "";
+  } else if (inputLen === "") {
+    document.getElementById("error-message").innerText = "";
+  } else {
+    document.getElementById("error-message").innerText = "Error - invalid entry for length. Using default length 5."
+  }
+  return len;
 }
 
 /*
@@ -118,7 +161,7 @@ function moveHead(dirKey, prevBodyEnd) {
       updateSnake(true);
 
     } else {
-      pos += 1.5;
+      pos += speed;
       //Update the CSS position of the head based on pos
       updateHeadCSS(head,pos,moveX);
 
@@ -143,7 +186,7 @@ function moveHead(dirKey, prevBodyEnd) {
       updateSnake(false);
 
     } else {
-      pos -= 1.5;
+      pos -= speed;
       //Update the position of the head based on pos
       updateHeadCSS(head,pos,moveX);
 
@@ -175,9 +218,14 @@ function moveHead(dirKey, prevBodyEnd) {
       //Check whether the snake ate the apple
       if (headPos.xPos == applePos.xPos && headPos.yPos == applePos.yPos) {
         applePos = spawnApple();
-        addBody(dir, head, prevBodyEnd);
+        //If the body hasn't reached startLen yet, increment startLen. Otherwise, add another body.
+        (snakeLen >= startLen) ? addBody(dir, head, prevBodyEnd) : startLen++;
       }
 
+      //Check whether the game has been won
+    if (snakeLen === 100) {
+      document.getElementById("error-message").innerText="Congratulations, you win! Click options to try a faster speed."
+    }
       //If the game hasn't been lost, move head again.
       if(!checkGameLost()) moveHead(keyDown, prevBodyEnd); 
   }
@@ -217,16 +265,16 @@ function moveBody(moveDone) {
       }
       switch(moveDir) {
         case "left":
-          body[i].style.left = parseFloat(body[i].style.left) - 1.5 + 'px'
+          body[i].style.left = parseFloat(body[i].style.left) - speed + 'px'
           break;
         case "up":
-          body[i].style.top = parseFloat(body[i].style.top) - 1.5 + 'px'
+          body[i].style.top = parseFloat(body[i].style.top) - speed + 'px'
           break;
         case "right":
-          body[i].style.left = parseFloat(body[i].style.left) + 1.5 + 'px'
+          body[i].style.left = parseFloat(body[i].style.left) + speed + 'px'
           break;
         case "down":
-          body[i].style.top = parseFloat(body[i].style.top) + 1.5 + 'px'
+          body[i].style.top = parseFloat(body[i].style.top) + speed + 'px'
           break;
       }
     } else {
@@ -254,22 +302,55 @@ function checkGameLost(){
   switch(keyDown) {
     //Left
     case 37:
+      //Check for out of bounds
       lost = headPos.xPos <= 0;
+      //Check for body collisions
+      var i = 0;
+      while (i < bodyPos.length && !lost) {
+        if ((bodyPos[i].xPos === headPos.xPos - 1) && (bodyPos[i].yPos === headPos.yPos)) {
+          lost = true;
+        }
+        i++;
+      }
       break;
     //Up
     case 38:
       lost = headPos.yPos <= 0;
+      var i = 0;
+      while (i < bodyPos.length && !lost) {
+        if ((bodyPos[i].xPos === headPos.xPos) && (bodyPos[i].yPos === headPos.yPos - 1)) {
+          lost = true;
+        }
+        i++;
+      }
       break;
     //Right
     case 39:
-      lost = headPos.xPos >=9; 
+      lost = headPos.xPos >= 9;
+      var i = 0;
+      while (i < bodyPos.length && !lost) {
+        if ((bodyPos[i].xPos === headPos.xPos+1) && (bodyPos[i].yPos === headPos.yPos)) {
+          lost = true;
+        }
+        i++;
+      }
       break;
     //Down
     case 40:
-      lost = headPos.yPos >=9;
+      lost = headPos.yPos >= 9;
+      var i = 0;
+      while (i < bodyPos.length && !lost) {
+        if ((bodyPos[i].xPos === headPos.xPos) && (bodyPos[i].yPos === headPos.yPos+1)) {
+          lost = true;
+        }
+        i++;
+      }
       break;
   }
-
+  playing = !lost;
+  if (lost) {
+    document.getElementById("error-message").innerText = "You lose! Score: " + snakeLen.toString();
+  }
   return lost;
 }
 
@@ -293,6 +374,9 @@ function addBody(dir, head, pos = new Position(0,0)) {
   snakeLen++;
 }
 
+/*
+ * Spawns a new apple and makes sure it is not within the snake body or head.
+ */
 function spawnApple() {
   var x = Math.floor(Math.random() * 10);
   var y = Math.floor(Math.random() * 10);
@@ -316,7 +400,12 @@ function spawnApple() {
   return apple;
 }
 
+/*
+ * Show options screen.
+ */
 function showOptions() {
-  var opScreen = document.getElementById("option-screen");
-  opScreen.style.visibility === "visible" ? opScreen.style.visibility = "hidden" : opScreen.style.visibility = "visible";
+  if (!playing) {
+    var opScreen = document.getElementById("option-screen");
+    opScreen.style.visibility === "visible" ? opScreen.style.visibility = "hidden" : opScreen.style.visibility = "visible";
+  }
 }

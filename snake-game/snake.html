@@ -19,9 +19,19 @@
   <div id="option-screen">
     <div id="option-form">
       <p>Starting length:</p>
-      <input type="textbox"></input>
-      <button type="button">OK</button>
+      <input type="text" id="lenBox"/>
+      <p>Speed:</p>
+      <input type="radio" id="rSlow" name="speed" value="slow"/>Slow<br />
+      <input type="radio" id="rMed" name="speed" value="medium" checked/>Medium<br />
+      <input type="radio" id="rFast" name="speed" value="fast" />Fast<br />
+      <input type="radio" id="rLight" name="speed" value="lightSpd" />Light Speed!<br />
+
+
+      <button type="button" onclick="showOptions()">OK</button>
     </div>
+  </div>
+  <div id="error-screen">
+    <p id="error-message"></p>
   </div>
 </body>
 </html>
