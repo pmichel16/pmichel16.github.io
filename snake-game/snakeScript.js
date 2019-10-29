@@ -19,14 +19,12 @@ var playing = false;
  * Upon clicking the start button, resets head position and starts moving the head to the right.
  */
 function startGame() {
-  if (!playing) {
+  if (!playing && $("#options-screen").css("visibility")==="hidden") {
     var head = document.getElementById("snake-head");
-    head.style.visibility = "visible";
-    head.style.top = topStart + 'px';
-    head.style.left = leftStart + 'px';
+    $("#snake-head").css({"visibility":"visible", "top":topStart+"px", "left":leftStart+"px"});
     headPos.xPos = 0;
     headPos.yPos = 0;
-    document.getElementById("error-message").innerText = "";
+    $("#error-message").text("");
     keyDown = 39;
     snakeLen = 1;
     startLen = getLength();
@@ -35,14 +33,14 @@ function startGame() {
     playing = true;
 
     //Remove existing body segments
-    const body = document.getElementsByClassName("snake-body");
+    var body = document.getElementsByClassName("snake-body");
     while (body.length > 0) {
       body[0].remove();
     }
 
     //Spawn a starting apple
     applePos = spawnApple();
-    document.getElementById("apple").style.visibility = "visible";
+    $("#apple").css("visibility","visible");
 
     //Start moving the snake
     moveHead(keyDown, new Position(0, 0));
@@ -86,13 +84,13 @@ function convertDirToString(dirKey) {
  */
 function getSpeed() {
   var speed = 0;
-  if (document.getElementById("rSlow").checked) {
+  if ($("#rSlow").prop("checked")) {
     speed = 0.75;
-  } else if (document.getElementById("rMed").checked) {
+  } else if ($("#rMed").prop("checked")) {
     speed = 1.5;
-  } else if (document.getElementById("rFast").checked) {
+  } else if ($("#rFast").prop("checked")) {
     speed = 3;
-  } else if (document.getElementById("rLight").checked) {
+  } else if ($("#rLight").prop("checked")) {
     speed = 8;
   }
   return speed;
@@ -103,15 +101,15 @@ function getSpeed() {
  */
 function getLength() {
   var len = 5;
-  const inputLen = (document.getElementById("lenBox").value);
+  const inputLen = $("#lenBox").prop("value");
   //Number between 1 and 99.
   if (inputLen.match(/^[1-9][0-9]{0,1}$/)) {
     len = Number(inputLen);
-    document.getElementById("error-message").innerText = "";
+    $("#error-message").text("");
   } else if (inputLen === "") {
-    document.getElementById("error-message").innerText = "";
+    $("#error-message").text("");
   } else {
-    document.getElementById("error-message").innerText = "Error - invalid entry for length. Using default length 5."
+    $("#error-message").text("Error - invalid entry for length. Using default length 5.");
   }
   return len;
 }
@@ -129,9 +127,9 @@ function moveHead(dirKey, prevBodyEnd) {
   //Depending which way the head is moving, either the left or top will need to be altered.
   var pos;
   if (moveX) {
-    pos = parseFloat(head.style.left);
+    pos = parseFloat($("#snake-head").css("left"));
   } else {
-    pos = parseFloat(head.style.top);
+    pos = parseFloat($("#snake-head").css("top"));
   }
 
   //Each square is sqWidth px by sqWidth px so find when the circle has moved one square.
@@ -155,7 +153,7 @@ function moveHead(dirKey, prevBodyEnd) {
       pos = posPlus;
 
       //Update the CSS position of the head
-      updateHeadCSS(head,pos,moveX);
+      updateHeadCSS(pos,moveX);
 
       //Update snake position and move body
       updateSnake(true);
@@ -163,7 +161,7 @@ function moveHead(dirKey, prevBodyEnd) {
     } else {
       pos += speed;
       //Update the CSS position of the head based on pos
-      updateHeadCSS(head,pos,moveX);
+      updateHeadCSS(pos,moveX);
 
       //Move the rest of the body, if it exists.
       if(snakeLen > 1) moveBody(false);
@@ -180,7 +178,7 @@ function moveHead(dirKey, prevBodyEnd) {
       pos = posMinus;
       
       //Update the CSS position of the head
-      updateHeadCSS(head,pos,moveX);
+      updateHeadCSS(pos,moveX);
 
       //Update snake length and move body
       updateSnake(false);
@@ -188,7 +186,7 @@ function moveHead(dirKey, prevBodyEnd) {
     } else {
       pos -= speed;
       //Update the position of the head based on pos
-      updateHeadCSS(head,pos,moveX);
+      updateHeadCSS(pos,moveX);
 
       //Move the body, if it exists.
       if(snakeLen > 1) moveBody(false);
@@ -224,7 +222,7 @@ function moveHead(dirKey, prevBodyEnd) {
 
       //Check whether the game has been won
     if (snakeLen === 100) {
-      document.getElementById("error-message").innerText="Congratulations, you win! Click options to try a faster speed."
+      $("#error-message").text("Congratulations, you win! Click options to try a faster speed.");
     }
       //If the game hasn't been lost, move head again.
       if(!checkGameLost()) moveHead(keyDown, prevBodyEnd); 
@@ -235,11 +233,11 @@ function moveHead(dirKey, prevBodyEnd) {
 /*
  * Updates CSS position of head based on pos
  */
-function updateHeadCSS(head,pos, moveX) {
+function updateHeadCSS(pos, moveX) {
   if (moveX) {
-    head.style.left = pos + 'px';
+    $("#snake-head").css("left",pos + 'px');
   } else {
-    head.style.top = pos + 'px';
+    $("#snake-head").css("top",pos + 'px');
   } 
 }
 
@@ -358,16 +356,14 @@ function checkGameLost(){
  * Adds a new body segment to the snake.
  */
 function addBody(dir, head, pos = new Position(0,0)) {
-  var newBody = document.createElement("div");
-  newBody.className = "snake-body";
+  var newBody = $("<div></div>");
+  newBody.addClass("snake-body");
 
-  //Attaching the head in the proper place
-  newBody.style.top = (pos.yPos) * 40 + topStart + 'px';
-  newBody.style.left = (pos.xPos) * 40 + leftStart + 'px';
- 
+  //Attach head in proper place
+  newBody.css({"top":(pos.yPos) * 40 + topStart + 'px',"left":(pos.xPos) * 40 + leftStart + 'px'});
+  
   //Attach the new div to the field
-  const board = document.getElementById("field-background");
-  board.appendChild(newBody); 
+  $("#field-background").append(newBody);
 
   //Add the new position to the array and increment snake length
   bodyPos.push(pos);
@@ -393,9 +389,7 @@ function spawnApple() {
   }
 
   //Make the apple appear in the correct position.
-  const appleHtml = document.getElementById("apple");
-  appleHtml.style.top = apple.yPos * 40 + topStart + 'px';
-  appleHtml.style.left = apple.xPos * 40 + leftStart + 'px';
+  $("#apple").css({"top":apple.yPos * 40 + topStart + 'px',"left":apple.xPos * 40 + leftStart + 'px'});
 
   return apple;
 }
@@ -405,7 +399,6 @@ function spawnApple() {
  */
 function showOptions() {
   if (!playing) {
-    var opScreen = document.getElementById("option-screen");
-    opScreen.style.visibility === "visible" ? opScreen.style.visibility = "hidden" : opScreen.style.visibility = "visible";
+    ($("#option-screen").css("visibility") === "visible") ? $("#option-screen").css("visibility","hidden") : $("#option-screen").css("visibility","visible");
   }
 }
