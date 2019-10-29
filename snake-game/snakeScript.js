@@ -19,7 +19,7 @@ var playing = false;
  * Upon clicking the start button, resets head position and starts moving the head to the right.
  */
 function startGame() {
-  if (!playing && $("#options-screen").css("visibility")==="hidden") {
+  if (!playing) {
     var head = document.getElementById("snake-head");
     $("#snake-head").css({"visibility":"visible", "top":topStart+"px", "left":leftStart+"px"});
     headPos.xPos = 0;
