@@ -14,6 +14,12 @@ h1 {
 
 h2 {
   font-size: 2.2em;
+  padding-left: 2.5vw;
+  padding-top: 8px;
+}
+
+p {
+  font-size: 1.3em;
 }
 
 .welcome-section {
@@ -51,21 +57,18 @@ h2 {
 .projects-section {
     background-color: thistle;
     color: var(--dark-text-color);
-    padding: 0px 4px;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-rows: repeat(autofill, 20vw);
     grid-gap: 5vw;
     padding: 0 5vw 0 5vw;
-    justify-items: center;
+    justify-content: center;
 }
 
 @media(min-width:800px) {
   .projects-grid {
       grid-template-columns: repeat(3, minmax(20vw,400px));
-      margin: 0 0 0 1fr;
   }
 }
 
