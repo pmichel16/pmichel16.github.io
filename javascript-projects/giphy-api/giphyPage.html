@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Giphy API</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
     <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="giphyStyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -12,14 +11,14 @@
     <div id="search-container">
       <div id="text-container">
         <input id="search-box" type="text" onkeydown="if(event.keyCode==13) giphySearch()"/>
-        <button id="search-button" class="blue-button" onclick="giphySearch()">Search</button>
+        <button id="search-button" onclick="giphySearch()">Search</button>
       </div>
 	  <div id="logo-container">
 		<img src="giphyLogo.png" alt="Giphy Logo" width="200">
 	  </div>
       <div id="num-results-container">
         <p>Results per page:</p> 
-        <select id="num-results">
+        <select id="num-results" onchange="if(hasSearched) giphySearch()">
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
@@ -30,7 +29,7 @@
     <div id="results-container">
     </div>
     <div id="load-container">
-      <button id="load-button" class="blue-button">Load More</button>
+      <button id="load-button" class="blue-button" onclick="loadMore()">Load More</button>
     </div>
   </body>
 </html>
