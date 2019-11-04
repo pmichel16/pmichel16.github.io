@@ -29,7 +29,7 @@ p {
     font-size: 0.8em;
 }
 
-#search-button {
+.blue-button {
     background-color: white;
     font-family: 'Staatliches', cursive;
     letter-spacing: 1.5px;
@@ -37,7 +37,7 @@ p {
     border: 2.9px solid #137dff;
 }
 
-#search-button:hover {
+.blue-button:hover {
     background-color: #137dff;
 }
 
@@ -57,4 +57,13 @@ p {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+#load-container {
+  display: flex;
+  justify-content: center;
+}
+
+#load-button {
+  visibility: hidden;
 }

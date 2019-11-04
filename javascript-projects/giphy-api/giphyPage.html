@@ -12,22 +12,25 @@
     <div id="search-container">
       <div id="text-container">
         <input id="search-box" type="text" onkeydown="if(event.keyCode==13) giphySearch()"/>
-        <button id="search-button" onclick="giphySearch()">Search</button>
+        <button id="search-button" class="blue-button" onclick="giphySearch()">Search</button>
       </div>
 	  <div id="logo-container">
-		<img src="giphyLogo.png" alt="Giphy Logo" width="200px">
+		<img src="giphyLogo.png" alt="Giphy Logo" width="200">
 	  </div>
       <div id="num-results-container">
         <p>Results per page:</p> 
         <select id="num-results">
-          <option value="5">5</option>
           <option value="10">10</option>
-          <option value="25">25</option>
+          <option value="20">20</option>
           <option value="50">50</option>
+          <option value="100">100</option>
         </select>
       </div>
     </div>
     <div id="results-container">
+    </div>
+    <div id="load-container">
+      <button id="load-button" class="blue-button">Load More</button>
     </div>
   </body>
 </html>
