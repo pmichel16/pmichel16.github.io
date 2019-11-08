@@ -7,18 +7,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="giphyScript.js"></script>
   </head>
-  <body>
+  <body onload="getGifs(0)">
     <div id="search-container">
       <div id="text-container">
-        <input id="search-box" type="text" onkeydown="if(event.keyCode==13) giphySearch()"/>
-        <button id="search-button" onclick="giphySearch()">Search</button>
+        <input id="search-box" type="text" onkeydown="if(event.keyCode==13) {offset=0; getGifs(0)}"/>
+        <button id="search-button" onclick="offset=0; getGifs(0)">Search</button>
       </div>
 	  <div id="logo-container">
 		<img src="giphyLogo.png" alt="Giphy Logo" width="200">
 	  </div>
       <div id="num-results-container">
         <p>Results per page:</p> 
-        <select id="num-results" onchange="if(hasSearched) giphySearch()">
+        <select id="num-results" onchange="offset=0; getGifs(0)">
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="50">50</option>
