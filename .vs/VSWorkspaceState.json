@@ -1,12 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\coat-page",
     "\\javascript-projects",
-    "\\javascript-projects\\giphy-api",
-    "\\javascript-projects\\tip-calculator",
-    "\\snake-game"
+    "\\javascript-projects\\giphy-api"
   ],
-  "SelectedNode": "\\javascript-projects\\giphy-api\\giphyStyle.css",
+  "SelectedNode": "\\indexStyle.css",
   "PreviewInSolutionExplorer": false
 }

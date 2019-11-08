@@ -56,25 +56,11 @@ p {
 .projects-section {
     background-color: thistle;
     color: var(--dark-text-color);
+    padding-bottom: 30px;
 }
 
-.projects-grid {
-    display: grid;
-    grid-gap: 5vw;
-    padding: 0 5vw 5vw 5vw;
-    justify-content: center;
-}
-
-@media(min-width:800px) {
-  .projects-grid {
-      grid-template-columns: repeat(3, minmax(20vw,400px));
-  }
-}
-
-@media(max-width:800px) {
-  .projects-grid {
-      grid-template-columns: repeat(2, minmax(20vw,1fr));
-  }
+.project-row {
+    margin: 0 15px;
 }
 
 .project-tile-frame {
@@ -97,19 +83,49 @@ p {
     position: absolute;
     background-color: #5b6d6b;
     top: 80%;
-    padding-top: 4%;
-    height: 16%;
+    height: 20%;
+    padding-top: 2%;
     width: 100%;
-    font-size: 1.3em;
     text-decoration: none;
     text-align: center;
     color: var(--light-text-color);
+}
+
+.project-tile-caption-text {
+  font-size: 1.9vw;
+  margin: 0;
+}
+
+.project-tile-caption-lang {
+  font-size: 1.3vw;
+  margin: 0;
+}
+
+.project-tile-caption:hover {
+  text-decoration: none;
+  background-color: #748b88;
+  color: var(--light-text-color);
 }
 
 .project-image-preview {
   width: 94%;
   height: auto;
   margin: 3% 3% 0 3%;
+}
+
+@media(max-width: 767.9px) {
+  .project-tile-frame {
+    margin-bottom: 30px;
+  }
+
+  .project-tile-caption-text {
+    font-size: 3.8vw;
+  }
+
+  .project-tile-caption-lang {
+    font-size: 2.6vw;
+    margin: 0;
+  }
 }
 
 #working-on {
