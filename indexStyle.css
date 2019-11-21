@@ -30,7 +30,7 @@ p {
     height: 40vh;
     color: var(--dark-text-color);
     text-align: center;
-    padding-top: 20vh 0;
+    padding-top: 10vh;
     box-shadow: 0 2px 0 rgba(0,0,0,0.4);
     width: 100%;
 }
