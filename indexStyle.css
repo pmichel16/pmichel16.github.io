@@ -122,6 +122,11 @@ p {
   color: var(--light-text-color);
 }
 
+.project-tile-frame a:visited {
+  color: var(--light-text-color);
+  text-decoration: none;
+}
+
 .project-image-preview {
   width: 94%;
   height: auto;
