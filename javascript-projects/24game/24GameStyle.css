@@ -1,0 +1,45 @@
+.num-input-container {
+  position: absolute; 
+  display: grid;
+  grid-template-rows: 100px 60px;
+  grid-gap: 10px;
+  width: 100px;
+}
+
+.num-input{
+  display: block;
+  height: 100%;
+  width: 100%; 
+  font-size: 60px;
+  text-align: center;
+}
+
+.error-msg {
+  text-align: center;
+  visibility: hidden;
+}
+
+#num1-container, #num3-container {
+  left: 300px;
+}
+
+#num2-container, #num4-container {
+  top: 300px;
+}
+
+#num1-container  {
+  top: 100px;
+}
+
+#num2-container {
+  left: 500px;
+}
+
+#num3-container {
+  top: 500px;
+}
+
+#num4-container {
+  left: 100px;
+}
+
