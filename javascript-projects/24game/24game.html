@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src='24GameScript.js'></script>
+    <link rel="stylesheet" type="text/css" href="24GameStyle.css">
+  </head>
+  <body>
+    <p>Enter four numbers between 1 and 9</p>
+    <div id="number-input-form">
+      <div id="num1-container" class="num-input-container">
+        <input type="text" maxlength = "1" id="num1" class="num-input" />
+        <div id="err1" class="error-msg">Input digit between 1-9</div>
+      </div>
+      <div id="num2-container" class="num-input-container">
+        <input type="text" maxlength = "1" id="num2" class="num-input" />
+        <div id="num2" class="error-msg">Input digit between 1-9</div>
+      </div>
+      <div id="num3-container" class="num-input-container">
+        <input type="text" maxlength = "1" id="num3" class="num-input" />
+        <div id="num3" class="error-msg">Input digit between 1-9</div>
+      </div>
+      <div id="num4-container" class="num-input-container">
+        <input type="text" maxlength = "1" id="num4" class="num-input" />
+        <div id="num4" class="error-msg">Input digit between 1-9</div>
+      </div>
+      <input type="button" id="submit-button" value="Solve!" onclick="if(validate()){solve24();}" />
+    </div>
+    <div id="result-printer"></div>
+  </body>
+</html>
