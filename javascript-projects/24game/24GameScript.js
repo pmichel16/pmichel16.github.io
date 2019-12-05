@@ -16,101 +16,23 @@ function solve24() {
   const nums = [$("#num1")[0].value,$("#num2")[0].value,$("#num3")[0].value,$("#num4")[0].value];
   const permutations = permute(nums);
   
-  //Iterate through each operation
-  var ops = ['+','+','+']
-  var found = false;
-  var solution = "No solution found";
-  while(!found && ops != ['/','/','/']) {
-    if(evaluate(nums, ops) === 24) {
-      found = true;
-      solution = writeSol(nums, ops);
-      console.log(ops);
-    } else {
-      ops = updateOps(ops);
-    }
-  }
-
-  function evaluate(numArr, opArr) {
-    var evaled = 0;
-    const num1 = parseFloat(numArr[0]);
-    var num2 = parseFloat(numArr[1]);
-    if(numArr.length != 2) {
-      var opShifted = opArr.shift();
-      var numShifted = numArr.shift();
-      num2 = parseFloat(evaluate(numArr, opArr));
-      numArr.unshift(numShifted);
-      opArr.unshift(opShifted);
-    }
-    switch(opArr[0]) {
-      case '+': 
-        evaled = num1+num2;
-        break;
-      case '-':
-        evaled = num1-num2;
-        break;
-      case '*':
-        evaled = num1*num2;
-        break;
-      case '/':
-        evaled = num1/num2;
-    }
-    return evaled
-  }
-
-  function updateOps(opsArr) {
-    if(opsArr.length > 1) {
-      switch(opsArr[opsArr.length - 1]) {
-        case '+':
-          opsArr[opsArr.length - 1] = '-';
-          break;
-        case '-':
-          opsArr[opsArr.length - 1] = '*';
-          break;
-        case '*':
-          opsArr[opsArr.length - 1] = '/';
-          break;
-        case '/':
-          opsArr.pop();
-          opsArr = updateOps(opsArr);
-          opsArr.push('+');
-          break;
+  //Test each operation on the permutations.
+  for (curPerm of permutations) {
+    var ops = ['+','+','+']
+    var found = false;
+    var solution = "No solution found";
+    for(var i = 0; i < 48; i++) {
+      if(evaluate(curPerm, ops) === 24) {
+        solution = writeSol(curPerm, ops);
+        $("#result-printer").text(solution);
+        return;
+      } else {
+        ops = updateOps(ops);
       }
     }
-    return opsArr;
+    const test=1;
   }
-
-  function writeSol(numArr, opArr) {
-    var result = "";
-    var second = "";
-    if(opArr.length ===1) {
-      second = numArr[1];
-    } else {
-      var numShift = numArr.shift();
-      var opShift = opArr.shift();
-      second = '(' + writeSol(numArr, opArr) + ')';
-      numArr.unshift(numShift);
-      opArr.unshift(opShift);
-    } 
-    switch(opArr[0]) {
-        case '+':
-          result = numArr[0] + '+' + second;
-          break;
-        case '-':
-          result = numArr[0] + '-' + second;
-          break;
-        case '*':
-          result = numArr[0] + '*' + second;
-          break;
-        case '/':
-          result = numArr[0] + '/' + second;
-          break;
-      }
-      return result;
-  }
-
-  return true;
 }
-
 
 /*
  * Find all permutations of the given array.
@@ -134,3 +56,86 @@ function permute(arr){
   }
   return allPerms;
 };
+
+/*
+ * Evaluate the current array with the given operations. The middle operation is evaluated first, and combines the two outer operations. 
+ */
+function evaluate(numArr, opArr) {
+  const left = evalPair(parseFloat(numArr[0]),parseFloat(numArr[1]),opArr[0]);
+  const right = evalPair(parseFloat(numArr[2]),parseFloat(numArr[3]),opArr[2]);
+  
+  return evalPair(left,right,opArr[1]);
+}
+
+/* 
+ * Evaluates the mathematical expression of the pair of numbers combined by op.
+ */
+function evalPair(num1, num2, op) {
+var eval = 0;
+switch(op) {
+    case '+': 
+      eval = num1+num2;
+      break;
+    case '-':
+      eval = num1-num2;
+      break;
+    case '*':
+      eval = num1*num2;
+      break;
+    case '/':
+      eval = num1/num2;
+      break;
+  }
+  return eval;
+}
+
+function updateOps(opsArr) {
+  if(opsArr.length > 0) {
+    switch(opsArr[opsArr.length - 1]) {
+      case '+':
+        opsArr[opsArr.length - 1] = '-'; 
+        break;
+      case '-':
+        opsArr[opsArr.length - 1] = '*';
+        break;
+      case '*':
+        opsArr[opsArr.length - 1] = '/';
+        break;
+      case '/':
+        opsArr.pop();
+        opsArr = updateOps(opsArr);
+        opsArr.push('+');
+        break;
+    }
+  }
+  return opsArr;
+}
+
+/* 
+ * Converts the calculated solution to a string.
+ */
+function writeSol(numArr, opArr) {
+  const left = '(' + writePair(numArr[0],numArr[1],opArr[0]) + ')'; 
+  const right = '(' + writePair(numArr[2],numArr[3],opArr[2]) + ')';
+
+  return writePair(left, right, opArr[1]);
+}
+
+function writePair(num1, num2, op) {
+  var result = "";
+  switch(op) {
+    case '+':
+      result = num1 + '+' + num2;
+      break;
+    case '-':
+      result = num1 + '-' + num2;
+      break;
+    case '*':
+      result = num1 + '*' + num2;
+      break;
+    case '/':
+      result = num1 + '/' + num2;
+      break;
+  }
+  return result;
+}
