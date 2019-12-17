@@ -1,3 +1,16 @@
+#background-pic {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  height: 600px;
+  width: 600px;
+}
+
+#instruction, #submit-button, #result-printer {
+  position: relative; 
+  left: 700px;
+}
+
 .num-input-container {
   position: absolute; 
   display: grid;

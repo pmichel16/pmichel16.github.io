@@ -22,16 +22,21 @@ function solve24() {
     var found = false;
     var solution = "No solution found";
     for(var i = 0; i < 48; i++) {
-      if(evaluate(curPerm, ops) === 24) {
-        solution = writeSol(curPerm, ops);
+      if (evaluate1(curPerm, ops) === 24) {
+        solution = writeSol1(curPerm, ops);
+        $("#result-printer").text(solution);
+        return;
+      }
+      else if (evaluate2(curPerm, ops) === 24) {
+        solution = writeSol2(curPerm, ops);
         $("#result-printer").text(solution);
         return;
       } else {
         ops = updateOps(ops);
       }
     }
-    const test=1;
   }
+  $("#result-printer").text(solution);
 }
 
 /*
@@ -60,11 +65,20 @@ function permute(arr){
 /*
  * Evaluate the current array with the given operations. The middle operation is evaluated first, and combines the two outer operations. 
  */
-function evaluate(numArr, opArr) {
+function evaluate1(numArr, opArr) {
   const left = evalPair(parseFloat(numArr[0]),parseFloat(numArr[1]),opArr[0]);
   const right = evalPair(parseFloat(numArr[2]),parseFloat(numArr[3]),opArr[2]);
   
   return evalPair(left,right,opArr[1]);
+}
+
+/*
+ * Evaluate the current array with the given operations. The operations are evaluated in order. 
+ */ 
+function evaluate2(numArr, opArr) {
+  const first = evalPair(parseFloat(numArr[0]), parseFloat(numArr[1]),opArr[0]);
+  const next = evalPair(first, parseFloat(numArr[2]), opArr[1]);
+  return evalPair(next, parseFloat(numArr[3]), opArr[2]);
 }
 
 /* 
@@ -112,13 +126,22 @@ function updateOps(opsArr) {
 }
 
 /* 
- * Converts the calculated solution to a string.
+ * Converts the calculated solution to a string. The middle operation is evaluated first, and combines the two outer operations.
  */
-function writeSol(numArr, opArr) {
+function writeSol1(numArr, opArr) {
   const left = '(' + writePair(numArr[0],numArr[1],opArr[0]) + ')'; 
   const right = '(' + writePair(numArr[2],numArr[3],opArr[2]) + ')';
 
   return writePair(left, right, opArr[1]);
+}
+
+/*
+ * Converts the calculated solution to a string. The operations are evaluated in order.
+ */
+function writeSol2(numArr, opArr) {
+  const first = '(' + writePair(numArr[0], numArr[1], opArr[0]) + ')';
+  const second = '(' + writePair(first, numArr[2], opArr[1]) + ')';
+  return writePair(second, numArr[3], opArr[2]);
 }
 
 function writePair(num1, num2, op) {
