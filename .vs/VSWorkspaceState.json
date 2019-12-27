@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\javascript-projects",
+    "\\javascript-projects\\24game"
   ],
-  "SelectedNode": "\\indexStyle.css",
+  "SelectedNode": "\\javascript-projects\\24game\\24GameStyle.css",
   "PreviewInSolutionExplorer": false
 }
